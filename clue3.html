@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>love you the mostest</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .answer-feedback {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            margin: -10px auto 18px;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .correct {
+            color: #83c99a;
+        }
+
+        .incorrect {
+            color: #e58c8c;
+        }
+
+        input.correct-input {
+            border: 1px solid #83c99a;
+        }
+
+        input.incorrect-input {
+            border: 1px solid #e58c8c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <p class="label">Problem 3 — Is Gabi Still Alive?</p>
+
+        <h1>The code reads...</h1>
+
+        <h2>BRING A FLASHLIGHT!!!</h2>
+
+        <div class="divider"></div>
+
+        <p>
+            You saw Gabi's note that you need to bring a flashlight.
+
+            Now, you need to make sure Gabi is even alive!
+            She sent you this next envelope.
+        </p>
+
+        <p>
+            If you type the same thing Gabi answered for each
+            category, you can move on to the next and final clue!
+        </p>
+
+        <div class="clue">
+            All five answers must match.
+            Good luck!
+        </div>
+
+        <form id="clue-form">
+
+            <label for="answer1">
+                1. SONG FROM "YOU SEEM PRETTY SAD FOR A GIRL SO IN LOVE"
+            </label>
+
+            <input
+                type="text"
+                id="answer1"
+                placeholder="Enter a song..."
+                autocomplete="off"
+                required
+            >
+
+            <p id="feedback1" class="answer-feedback"></p>
+
+
+            <label for="answer2">
+                2. REGULAR DISH ONE OF US ALWAYS ORDERS
+            </label>
+
+            <input
+                type="text"
+                id="answer2"
+                placeholder="Enter a dish..."
+                autocomplete="off"
+                required
+            >
+
+            <p id="feedback2" class="answer-feedback"></p>
+
+
+            <label for="answer3">
+                3. ONE OF MY FRIENDS
+            </label>
+
+            <input
+                type="text"
+                id="answer3"
+                placeholder="Enter a name..."
+                autocomplete="off"
+                required
+            >
+
+            <p id="feedback3" class="answer-feedback"></p>
+
+
+            <label for="answer4">
+                4. SONG FROM "THE RISE AND FALL OF A MIDWEST PRINCESS"
+            </label>
+
+            <input
+                type="text"
+                id="answer4"
+                placeholder="Enter a song..."
+                autocomplete="off"
+                required
+            >
+
+            <p id="feedback4" class="answer-feedback"></p>
+
+
+            <label for="answer5">
+                5. RESTAURANT ON/NEAR CAMPUS
+            </label>
+
+            <input
+                type="text"
+                id="answer5"
+                placeholder="Enter a restaurant..."
+                autocomplete="off"
+                required
+            >
+
+            <p id="feedback5" class="answer-feedback"></p>
+
+
+            <button type="submit">SUBMIT ANSWERS</button>
+
+        </form>
+
+        <p id="feedback" aria-live="polite"></p>
+
+    </div>
+
+
+    <script>
+
+        // GABI'S SECRET ANSWERS
+        const secretAnswers = [
+            "honeybee",
+            "garlic lover",
+            "aruhi",
+            "picture you",
+            "jumbo jumbo chicken"
+        ];
+
+        const form = document.getElementById("clue-form");
+        const feedback = document.getElementById("feedback");
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let correctCount = 0;
+
+            // Check each of the five answers.
+            for (let i = 0; i < 5; i++) {
+
+                const input = document.getElementById("answer" + (i + 1));
+
+                const result = document.getElementById("feedback" + (i + 1));
+
+                // Clean up the player's answer.
+                const guess = input.value
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, " ");
+
+                // Clean up Gabi's secret answer.
+                const correctAnswer = secretAnswers[i]
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, " ");
+
+                // Compare the answers.
+                if (guess === correctAnswer) {
+
+                    result.textContent =
+                        "✓ CORRECT! You know me well.";
+
+                    result.className = "answer-feedback correct";
+
+                    input.classList.add("correct-input");
+                    input.classList.remove("incorrect-input");
+
+                    correctCount++;
+
+                } else {
+
+                    result.textContent =
+                        "✗ INCORRECT! Try again.";
+
+                    result.className = "answer-feedback incorrect";
+
+                    input.classList.add("incorrect-input");
+                    input.classList.remove("correct-input");
+
+                }
+
+            }
+
+            // Display the score.
+            const wrongCount = 5 - correctCount;
+
+            if (correctCount === 5) {
+
+                feedback.textContent =
+                    "5/5 CORRECT! ALL ANSWERS MATCH! You really do know me.";
+
+                setTimeout(function() {
+                    window.location.href = "clue4.html";
+                }, 1800);
+
+            } else {
+
+                feedback.textContent =
+                    correctCount + "/5 correct and " +
+                    wrongCount + " wrong. Keep trying!";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

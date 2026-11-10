@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I love you more</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <p class="label">Problem 1 — Where did Gabi go?</p>
+
+        <h1>Gabi's letter.</h1>
+
+        <div class="divider"></div>
+
+        <p>
+            You carefully open the envelope. Inside is a small
+            piece of paper with a message written on it.
+        </p>
+
+        <div class="clue">
+            "A huge creature took me in the middle of the Knight. In the middle of my slumber!
+            Please help me Queen sonaya. I don't want to become a Pawn in this game.
+            It feels like this creature wants to TEACH me his ways..."
+        </div>
+
+        <p>Enter the password to continue.</p>
+
+        <form id="clue-form">
+            <input
+                type="text"
+                id="answer"
+                placeholder="Type your answer..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">UNLOCK NEXT CLUE</button>
+        </form>
+
+        <p id="feedback" aria-live="polite"></p>
+
+    </div>
+
+    <script>
+        const form = document.getElementById("clue-form");
+        const answer = document.getElementById("answer");
+        const feedback = document.getElementById("feedback");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (answer.value.trim().toLowerCase() === "board and brew") {
+                window.location.href = "clue2.html";
+            } else {
+                feedback.textContent =
+                    "Incorrect password. Look closer at the clue!";
+            }
+        });
+    </script>
+
+</body>
+</html>

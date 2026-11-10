@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>love you the mostest mostest</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .goose-image {
+            display: block;
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            margin: 25px auto;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+        }
+
+        #goose-reveal[hidden],
+        #final-clue[hidden] {
+            display: none;
+        }
+
+        .word-list {
+            margin: 25px auto;
+            max-width: 450px;
+        }
+
+        .word-question {
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        .scrambled-word {
+            color: var(--gold);
+            font-family: Georgia, serif;
+            font-size: 21px;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .word-question input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .answer-feedback {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            margin-top: 7px;
+            min-height: 16px;
+        }
+
+        .correct {
+            color: #83c99a;
+        }
+
+        .incorrect {
+            color: #e58c8c;
+        }
+
+        input.correct-input {
+            border: 1px solid #83c99a;
+        }
+
+        input.incorrect-input {
+            border: 1px solid #e58c8c;
+        }
+
+        #overall-feedback {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <p class="label">LAST PROBLEM — SAVE GABI</p>
+
+        <h1>YAYYY YOU DID IT!! WE GOT A PERFECT MATCH</h1>
+
+        <h2>THAT MUST MEAN WE ARE A PERFECT MATCH!! HEHEHEHEHE!</h2>
+
+        <div class="divider"></div>
+
+        <p>
+            So this means Gabi is still alive. And wow! You made it to the Board and Brew.
+        </p>
+
+        <p>
+            You enter and discover... OMG... CLICK THE BUTTON TO SEE!
+        </p>
+
+        <button type="button" class="button" id="reveal-button">
+            REVEAL THE DISCOVERY
+        </button>
+
+        <div id="goose-reveal" hidden>
+
+            <h2>OH. MY. GOOSE.</h2>
+
+            <img src="goose.jpg" alt="A mysterious goose" class="goose-image">
+
+            <p>
+                A GOOSE KIDNAPPED GABI!!
+            </p>
+
+            <p>
+                There is ONE final clue!
+            </p>
+
+            <div class="divider"></div>
+
+            <section id="final-clue">
+
+                <p class="label">FINAL CLUE — SAVING GABI</p>
+
+                <h2>UNSCRAMBLE THE WORDS!</h2>
+
+                <p>
+                    To defeat the evil goose, you need to unscramble these 5 words. Good luck!
+                </p>
+
+                <div class="clue">
+                    All five words must be correct. Good luck!!
+                </div>
+
+                <form id="word-form">
+
+                    <div class="word-list">
+
+                        <div class="word-question">
+                            <p class="scrambled-word">1. Y C H O P S O G L Y</p>
+                            <input type="text" id="word1" placeholder="Unscramble the word..." required>
+                            <p class="answer-feedback" id="feedback1"></p>
+                        </div>
+
+                        <div class="word-question">
+                            <p class="scrambled-word">2. T U N O D</p>
+                            <input type="text" id="word2" placeholder="Unscramble the word..." required>
+                            <p class="answer-feedback" id="feedback2"></p>
+                        </div>
+
+                        <div class="word-question">
+                            <p class="scrambled-word">3. R U T E A F E</p>
+                            <input type="text" id="word3" placeholder="Unscramble the word..." required>
+                            <p class="answer-feedback" id="feedback3"></p>
+                        </div>
+
+                        <div class="word-question">
+                            <p class="scrambled-word">4. C R O M I S C O P E</p>
+                            <input type="text" id="word4" placeholder="Unscramble the word..." required>
+                            <p class="answer-feedback" id="feedback4"></p>
+                        </div>
+
+                        <div class="word-question">
+                            <p class="scrambled-word">5. H A N T E P E L</p>
+                            <input type="text" id="word5" placeholder="Unscramble the word..." required>
+                            <p class="answer-feedback" id="feedback5"></p>
+                        </div>
+
+                    </div>
+
+                    <button type="submit">SUBMIT FINAL ANSWERS</button>
+
+                </form>
+
+                <p id="overall-feedback" aria-live="polite"></p>
+
+            </section>
+
+        </div>
+
+    </div>
+
+    <script>
+        const revealButton = document.getElementById("reveal-button");
+        const gooseReveal = document.getElementById("goose-reveal");
+        const finalClue = document.getElementById("final-clue");
+
+        revealButton.addEventListener("click", function () {
+            gooseReveal.hidden = false;
+            finalClue.hidden = false;
+            revealButton.hidden = true;
+        });
+
+        const correctAnswers = [
+            "psychology",
+            "donut",
+            "feature",
+            "microscope",
+            "elephant"
+        ];
+
+        document.getElementById("word-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let correctCount = 0;
+
+            for (let i = 0; i < correctAnswers.length; i++) {
+
+                const input = document.getElementById("word" + (i + 1));
+                const feedback = document.getElementById("feedback" + (i + 1));
+
+                const guess = input.value.trim().toLowerCase();
+                const answer = correctAnswers[i];
+
+                input.classList.remove("correct-input", "incorrect-input");
+                feedback.classList.remove("correct", "incorrect");
+
+                if (guess === answer) {
+                    correctCount++;
+
+                    feedback.textContent = "✓ CORRECT!";
+                    feedback.classList.add("correct");
+                    input.classList.add("correct-input");
+
+                } else {
+                    feedback.textContent = "✗ INCORRECT! Try again.";
+                    feedback.classList.add("incorrect");
+                    input.classList.add("incorrect-input");
+                }
+            }
+
+            const wrongCount = correctAnswers.length - correctCount;
+            const overallFeedback = document.getElementById("overall-feedback");
+
+            if (correctCount === 5) {
+                overallFeedback.textContent =
+                    "5/5 CORRECT!! YOU DID IT!! THE MISSION IS COMPLETE!";
+
+                overallFeedback.className = "correct";
+
+                setTimeout(function() {
+                    window.location.href = "final.html";
+                }, 2000);
+
+            } else {
+                overallFeedback.textContent =
+                    correctCount + "/5 correct and " + wrongCount +
+                    " wrong. Keep trying!!";
+
+                overallFeedback.className = "incorrect";
+            }
+        });
+    </script>
+
+</body>
+</html>

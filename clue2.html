@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i love you the most</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <p class="label">Problem 2 — What do you need?</p>
+
+        <h1>YOU GOT IT!</h1>
+        <h2>Gabi was kidnapped and taken to the Board and Brew, where she taught 
+            you how to play chess for the first time! (It was also our first date
+            I'm not sure if you remember)
+        </h2>
+
+        <div class="divider"></div>
+
+        <p>
+            On the walk over there, you see another envelope on the ground. It says
+            "BRING THIS". It looks important.
+        </p>
+
+        <p class="envelope-instruction">
+            CLICK THE ENVELOPE TO OPEN IT
+        </p>
+
+        <button
+            type="button"
+            class="envelope-button"
+            id="open-envelope"
+            aria-label="Open the secret envelope"
+            aria-expanded="false"
+        >
+            <span class="envelope">
+                <span class="envelope-letter"></span>
+                <span class="envelope-back"></span>
+                <span class="envelope-flap"></span>
+                <span class="envelope-front"></span>
+                <span class="envelope-seal"></span>
+            </span>
+        </button>
+
+        <section id="revealed-clue" hidden>
+
+            <h2>Solve this riddle to figure out what you should bring to save me.</h2>
+
+            <img
+                 src="mathriddle.jpg"
+                 alt="A math riddle that reveals what you need to bring."
+                 class="memory-photo"
+            >
+
+
+            <form id="clue-form">
+                <label for="answer">ENTER THE NUMBER</label>
+
+                <input
+                    type="text"
+                    id="answer"
+                    placeholder="Your answer..."
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit">UNLOCK NEXT CLUE</button>
+            </form>
+
+            <p id="feedback" aria-live="polite"></p>
+
+        </section>
+
+    </div>
+
+    <script>
+        const envelope = document.getElementById("open-envelope");
+        const revealedClue = document.getElementById("revealed-clue");
+        const form = document.getElementById("clue-form");
+        const answer = document.getElementById("answer");
+        const feedback = document.getElementById("feedback");
+
+        envelope.addEventListener("click", function () {
+            envelope.classList.add("opened");
+            envelope.setAttribute("aria-expanded", "true");
+            envelope.disabled = true;
+
+            // Wait for the envelope animation before revealing the clue.
+            setTimeout(function () {
+                revealedClue.hidden = false;
+            }, 650);
+        });
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const guess = answer.value.trim().toLowerCase();
+
+            if (guess === "15") {
+                window.location.href = "clue3.html";
+            } else {
+                feedback.textContent =
+                    "Not quite! Look at the number of items and use PEMDAS.";
+            }
+        });
+    </script>
+
+</body>
+</html>
